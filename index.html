@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>Arnold — Product Developer | Frontend &amp; Mobile Engineer</title>
+  <meta name="title" content="Arnold — Product Developer | Frontend & Mobile Engineer">
+  <meta name="description" content="I build digital products, responsive web apps, and mobile experiences by combining frontend engineering, product thinking, and UI/UX design.">
+  <meta name="keywords" content="Product Developer, Frontend Developer, Mobile App Developer, React Native, React, Expo, UI UX Designer, Arnold">
+  <meta name="author" content="Arnold">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Performance Preconnect & Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- 3D WebGL Background Scene & Atmosphere -->
+  <canvas id="webglCanvas"></canvas>
+  <div class="bg-vignette"></div>
+  <div class="bg-grain"></div>
+
+  <!-- =========================================================================
+       STICKY HEADER & FLOATING NAVIGATION
+       ========================================================================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-wrap">
+      <a href="#hero" class="brand-link" aria-label="Arnold Product Developer">
+        <img src="assets/images/logo.png" alt="Arnold" class="brand-logo-img">
+        <span class="brand-title-badge"><span class="pulse-dot"></span> AVAILABLE FOR PRODUCTS</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#hero" class="nav-item active">Home</a>
+        <a href="#focus" class="nav-item">Focus</a>
+        <a href="#apps" class="nav-item">Apps</a>
+        <a href="#work" class="nav-item">Websites</a>
+        <a href="#stack" class="nav-item">Stack</a>
+        <a href="#connect" class="nav-item">Connect</a>
+      </nav>
+
+      <!-- Action Icons (X + Email) -->
+      <div class="nav-actions">
+        <a href="https://x.com/Arnold20064" target="_blank" rel="noopener noreferrer" class="icon-btn" title="Follow Arnold on X (@Arnold20064)">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="mailto:davidonyekaonwu565@gmail.com" class="icon-btn" title="Send Email">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-nav-items">
+      <a href="#hero" class="mobile-nav-link"><span>01 / Home</span> &rarr;</a>
+      <a href="#focus" class="mobile-nav-link"><span>02 / What I Do</span> &rarr;</a>
+      <a href="#apps" class="mobile-nav-link"><span>03 / Featured Apps</span> &rarr;</a>
+      <a href="#work" class="mobile-nav-link"><span>04 / Selected Work</span> &rarr;</a>
+      <a href="#stack" class="mobile-nav-link"><span>05 / Tech Stack</span> &rarr;</a>
+      <a href="#connect" class="mobile-nav-link"><span>06 / Let's Talk</span> &rarr;</a>
+    </div>
+    <div>
+      <a href="mailto:davidonyekaonwu565@gmail.com" class="btn-pill btn-pill-primary" style="width: 100%;">
+        Email Arnold &rarr;
+      </a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- =========================================================================
+         SECTION 1: HERO
+         ========================================================================= -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-wrap">
+        
+        <div class="hero-content">
+          <div class="hero-kicker-pill">
+            <span>arnold</span> · product developer &amp; engineer
+          </div>
+
+          <!-- Luminous Multi-Color Headline -->
+          <h1 class="hero-headline">
+            Building web apps and responsive <span class="glow-gradient-text">front-end interfaces</span>.
+          </h1>
+
+          <!-- Statement with Animated Clean & Fast -->
+          <p class="hero-statement">
+            Turning complex ideas into <span class="word-clean">clean</span>, <span class="word-fast">fast</span> digital experiences.
+          </p>
+
+          <p class="hero-bio-detail">
+            I work across the product lifecycle—from concept and UI/UX design to state architecture, backend integration, and mobile app deployment.
+          </p>
+
+          <div class="hero-action-row">
+            <a href="#apps" class="btn-pill btn-pill-primary">View Products &amp; Apps &darr;</a>
+            <a href="https://x.com/Arnold20064" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-glass">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Follow on X
+            </a>
+            <button type="button" class="btn-pill btn-pill-glass" data-copy="davidonyekaonwu565@gmail.com" title="Click to copy email">
+              Copy Email 📋
+            </button>
+          </div>
+        </div>
+
+        <!-- Makima Framing Gesture Visual Card -->
+        <div class="hero-visual-card" id="heroAvatarCard">
+          <div class="avatar-frame">
+            <img src="assets/images/makima_avatar.png" id="avatarImg" alt="Makima framing gesture illustration" loading="eager">
+          </div>
+          <div class="character-tag-row">
+            <span class="character-badge">FOCUSED PERSPECTIVE</span>
+            <span class="character-caption">Framing what matters.</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 2: FOCUS (WHAT I DO)
+         ========================================================================= -->
+    <section class="section" id="focus">
+      <div class="container">
+        <span class="section-kicker">areas of focus</span>
+        <h2 class="section-heading">what i do.</h2>
+
+        <div class="frosted-panel">
+          <div class="focus-rows">
+            <div class="focus-row-item">
+              <span class="focus-num">01</span>
+              <span class="focus-title">Frontend Engineering</span>
+              <span class="focus-detail">React · TypeScript · Modern Webcraft</span>
+            </div>
+            <div class="focus-row-item">
+              <span class="focus-num">02</span>
+              <span class="focus-title">Web Application Architecture</span>
+              <span class="focus-detail">Complex State · REST/GraphQL · Supabase</span>
+            </div>
+            <div class="focus-row-item">
+              <span class="focus-num">03</span>
+              <span class="focus-title">Cross-Platform Mobile Development</span>
+              <span class="focus-detail">React Native · Expo · Native Modules</span>
+            </div>
+            <div class="focus-row-item">
+              <span class="focus-num">04</span>
+              <span class="focus-title">Tactile UI/UX &amp; Design Systems</span>
+              <span class="focus-detail">Figma · Micro-Interactions · Fluid Motion</span>
+            </div>
+            <div class="focus-row-item">
+              <span class="focus-num">05</span>
+              <span class="focus-title">Performance &amp; Web Vitals Optimization</span>
+              <span class="focus-detail">Sub-second LCP · Zero CLS · Mobile-First</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 3: HIGHLIGHTS METRICS
+         ========================================================================= -->
+    <section class="section" style="padding-top: 0;" id="highlights">
+      <div class="container">
+        <div class="highlights-grid">
+          <div class="highlight-stat-card">
+            <div>
+              <div class="stat-number">2+</div>
+              <div class="stat-label">Product Platforms</div>
+            </div>
+            <div class="stat-sub">Lumis Web OS &amp; Nestie Mobile</div>
+          </div>
+          <div class="highlight-stat-card">
+            <div>
+              <div class="stat-number">5+</div>
+              <div class="stat-label">Live Client Sites</div>
+            </div>
+            <div class="stat-sub">Deployed and actively serving traffic</div>
+          </div>
+          <div class="highlight-stat-card">
+            <div>
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Mobile Priority</div>
+            </div>
+            <div class="stat-sub">Engineered for handheld touch screens</div>
+          </div>
+          <div class="highlight-stat-card">
+            <div>
+              <div class="stat-number">&lt;1.0s</div>
+              <div class="stat-label">Load Speeds</div>
+            </div>
+            <div class="stat-sub">Lightweight, zero-bloat architecture</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 4: FEATURED APPS (LUMIS & NESTIE)
+         ========================================================================= -->
+    <section class="section" id="apps">
+      <div class="container">
+        <span class="section-kicker">featured software</span>
+        <h2 class="section-heading">products i engineered.</h2>
+
+        <div class="apps-grid">
+          
+          <!-- APP 1: LUMIS -->
+          <div class="app-card">
+            <div>
+              <div class="app-top-meta">
+                <span class="app-badge-pill blue">WEB PLATFORM</span>
+                <span class="app-status">Live Production ↗</span>
+              </div>
+              <h3 class="app-name">Lumis</h3>
+              <p class="app-tagline">
+                An all-in-one digital operating system built to streamline the university student experience into a unified daily workspace.
+              </p>
+              <div class="app-bullets">
+                <div class="bullet-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Centralized course schedules &amp; announcement feeds</span>
+                </div>
+                <div class="bullet-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Shared peer resources &amp; attendance tracking</span>
+                </div>
+                <div class="bullet-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Campus social connection &amp; study groups</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="app-tech-tags">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Supabase</span>
+                <span class="tech-tag">Vercel</span>
+              </div>
+              <a href="https://lumi-two-eta.vercel.app/" target="_blank" rel="noopener noreferrer" class="app-card-action">
+                Launch Lumis App ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- APP 2: NESTIE -->
+          <div class="app-card">
+            <div>
+              <div class="app-top-meta">
+                <span class="app-badge-pill orange">MOBILE APP</span>
+                <span class="app-status">In Active Development 🔨</span>
+              </div>
+              <h3 class="app-name">Nestie</h3>
+              <p class="app-tagline">
+                A dedicated creator economy platform empowering African writers, anime artists, manga authors, and comic creators to monetize directly.
+              </p>
+              <div class="app-bullets">
+                <div class="bullet-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Direct creator monetization &amp; patron subscriptions</span>
+                </div>
+                <div class="bullet-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Optimized mobile reader for comics, manga &amp; serials</span>
+                </div>
+                <div class="bullet-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Community fan engagement &amp; live tip feeds</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="app-tech-tags">
+                <span class="tech-tag">React Native</span>
+                <span class="tech-tag">Expo Router</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Auth</span>
+              </div>
+              <span class="app-card-action" style="color: var(--accent-amber);">
+                Private Alpha Beta Testing
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 5: SELECTED WEBSITES (5 LIVE BUILDS - MOBILE SWIPEABLE)
+         ========================================================================= -->
+    <section class="section" id="work">
+      <div class="container">
+        <span class="section-kicker">client deployments</span>
+        <h2 class="section-heading">selected websites.</h2>
+
+        <!-- Mobile Touch Swipe Track -->
+        <div class="projects-scroll-track">
+          
+          <!-- 1: Creamtown -->
+          <div class="project-tile-card">
+            <div class="tile-media-box">
+              <img src="assets/images/sweet_scoops_hero.jpg" alt="Creamtown custom ice cream website" loading="lazy">
+            </div>
+            <div class="tile-content">
+              <div>
+                <div class="tile-header">
+                  <span class="tile-category">E-Commerce &amp; Dining</span>
+                  <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">Live ↗</span>
+                </div>
+                <h4 class="tile-title">Creamtown</h4>
+                <p class="tile-desc">Artisan dessert ordering system with instant payload generation directly to kitchen WhatsApp channels.</p>
+              </div>
+              <a href="https://davidonyekaonwu565-glitch.github.io/creamtown/" target="_blank" rel="noopener noreferrer" class="tile-link">
+                Visit live website ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- 2: JMAX -->
+          <div class="project-tile-card">
+            <div class="tile-media-box" style="display:flex; align-items:center; justify-content:center; background: #120e06;">
+              <div style="text-align:center; padding: 1rem;">
+                <span style="color:#eab308; font-family: var(--font-mono); font-size:0.75rem; letter-spacing:0.1em; display:block; margin-bottom:0.25rem;">24/7 SALON</span>
+                <span style="color:#fff; font-weight:800; font-size:1.15rem;">JMAX Beauty</span>
+              </div>
+            </div>
+            <div class="tile-content">
+              <div>
+                <div class="tile-header">
+                  <span class="tile-category">Salon &amp; Luxury</span>
+                  <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">Live ↗</span>
+                </div>
+                <h4 class="tile-title">JMAX Beauty Salon</h4>
+                <p class="tile-desc">High-touch booking catalog and live studio status for an all-hours luxury beauty lounge in Lagos.</p>
+              </div>
+              <a href="https://davidonyekaonwu565-glitch.github.io/jmax/" target="_blank" rel="noopener noreferrer" class="tile-link">
+                Visit live website ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- 3: City Creamery -->
+          <div class="project-tile-card">
+            <div class="tile-media-box">
+              <img src="assets/images/hero_gelato_luxury.jpg" alt="City Creamery website" loading="lazy">
+            </div>
+            <div class="tile-content">
+              <div>
+                <div class="tile-header">
+                  <span class="tile-category">Brand Experience</span>
+                  <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">Live ↗</span>
+                </div>
+                <h4 class="tile-title">City Creamery</h4>
+                <p class="tile-desc">Vibrant gelato and waffle showcase engineered with buttery smooth motion and responsive layout.</p>
+              </div>
+              <a href="https://davidonyekaonwu565-glitch.github.io/citycreamery/" target="_blank" rel="noopener noreferrer" class="tile-link">
+                Visit live website ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- 4: Make Me Beauty -->
+          <div class="project-tile-card">
+            <div class="tile-media-box" style="display:flex; align-items:center; justify-content:center; background: #160814;">
+              <div style="text-align:center; padding: 1rem;">
+                <span style="color:#f472b6; font-family: var(--font-mono); font-size:0.75rem; letter-spacing:0.1em; display:block; margin-bottom:0.25rem;">HAUTE COIFFURE</span>
+                <span style="color:#fff; font-weight:800; font-size:1.15rem;">Make Me Beauty</span>
+              </div>
+            </div>
+            <div class="tile-content">
+              <div>
+                <div class="tile-header">
+                  <span class="tile-category">Beauty Lounge</span>
+                  <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">Live ↗</span>
+                </div>
+                <h4 class="tile-title">Make Me Beauty Place</h4>
+                <p class="tile-desc">Bridal coiffure styling gallery and reservation engine tailored for mobile smartphone visitors.</p>
+              </div>
+              <a href="https://davidonyekaonwu565-glitch.github.io/make-me-beauty/" target="_blank" rel="noopener noreferrer" class="tile-link">
+                Visit live website ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- 5: David Tulloch Roofing -->
+          <div class="project-tile-card">
+            <div class="tile-media-box" style="display:flex; align-items:center; justify-content:center; background: #0c121e;">
+              <div style="text-align:center; padding: 1rem;">
+                <span style="color:#38bdf8; font-family: var(--font-mono); font-size:0.75rem; letter-spacing:0.1em; display:block; margin-bottom:0.25rem;">CONTRACTOR</span>
+                <span style="color:#fff; font-weight:800; font-size:1.15rem;">DT Roofing</span>
+              </div>
+            </div>
+            <div class="tile-content">
+              <div>
+                <div class="tile-header">
+                  <span class="tile-category">Industrial</span>
+                  <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">Live ↗</span>
+                </div>
+                <h4 class="tile-title">David Tulloch Roofing</h4>
+                <p class="tile-desc">High-trust contractor quote generation pipeline built for swift emergency roof repair estimates.</p>
+              </div>
+              <a href="https://davidonyekaonwu565-glitch.github.io/dt-roofing/" target="_blank" rel="noopener noreferrer" class="tile-link">
+                Visit live website ↗
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 6: VERIFIED TECH STACK
+         ========================================================================= -->
+    <section class="section" id="stack">
+      <div class="container">
+        <span class="section-kicker">engineering toolkit</span>
+        <h2 class="section-heading">how i build.</h2>
+
+        <div class="stack-groups-grid">
+          
+          <div class="stack-group-card">
+            <div class="stack-group-title">
+              <span>⚡</span> Frontend
+            </div>
+            <div class="stack-pill-cloud">
+              <span class="stack-pill">React</span>
+              <span class="stack-pill">TypeScript</span>
+              <span class="stack-pill">JavaScript (ES6+)</span>
+              <span class="stack-pill">HTML5</span>
+              <span class="stack-pill">CSS3 / Grid</span>
+              <span class="stack-pill">Three.js</span>
+            </div>
+          </div>
+
+          <div class="stack-group-card">
+            <div class="stack-group-title">
+              <span>📱</span> Mobile
+            </div>
+            <div class="stack-pill-cloud">
+              <span class="stack-pill">React Native</span>
+              <span class="stack-pill">Expo</span>
+              <span class="stack-pill">Expo Router</span>
+              <span class="stack-pill">Native APIs</span>
+            </div>
+          </div>
+
+          <div class="stack-group-card">
+            <div class="stack-group-title">
+              <span>🗄️</span> Backend &amp; Data
+            </div>
+            <div class="stack-pill-cloud">
+              <span class="stack-pill">Supabase</span>
+              <span class="stack-pill">PostgreSQL</span>
+              <span class="stack-pill">SQL</span>
+              <span class="stack-pill">Authentication</span>
+              <span class="stack-pill">REST APIs</span>
+            </div>
+          </div>
+
+          <div class="stack-group-card">
+            <div class="stack-group-title">
+              <span>🚀</span> Testing &amp; Deploy
+            </div>
+            <div class="stack-pill-cloud">
+              <span class="stack-pill">Vitest</span>
+              <span class="stack-pill">Git</span>
+              <span class="stack-pill">GitHub</span>
+              <span class="stack-pill">Vercel</span>
+              <span class="stack-pill">Netlify</span>
+              <span class="stack-pill">GitHub Pages</span>
+            </div>
+          </div>
+
+          <div class="stack-group-card">
+            <div class="stack-group-title">
+              <span>🎨</span> Design &amp; Craft
+            </div>
+            <div class="stack-pill-cloud">
+              <span class="stack-pill">Figma</span>
+              <span class="stack-pill">UI/UX Systems</span>
+              <span class="stack-pill">Micro-Interactions</span>
+              <span class="stack-pill">Design Thinking</span>
+            </div>
+          </div>
+
+          <div class="stack-group-card">
+            <div class="stack-group-title">
+              <span>⚙️</span> Developer Tools
+            </div>
+            <div class="stack-pill-cloud">
+              <span class="stack-pill">Google Antigravity</span>
+              <span class="stack-pill">Claude</span>
+              <span class="stack-pill">ChatGPT</span>
+              <span class="stack-pill">DeepSeek</span>
+              <span class="stack-pill">Node.js</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 7: PHILOSOPHY & NOW
+         ========================================================================= -->
+    <section class="section" id="philosophy">
+      <div class="container">
+        <span class="section-kicker">core ethos</span>
+        <blockquote class="philosophy-quote">
+          I believe software should be tactile, clean, and intuitive. The best digital products aren't weighed down by complexity—they are engineered simply enough that anyone can use them without friction.
+        </blockquote>
+
+        <div class="frosted-panel" style="margin-top: 3rem;" id="now">
+          <span class="section-kicker">currently</span>
+          <div class="now-rows" style="margin-top: 1rem;">
+            <div class="now-item">
+              <span class="now-bullet-ring"></span>
+              <span>Architecting the <strong>Nestie</strong> African creator monetization mobile platform.</span>
+            </div>
+            <div class="now-item">
+              <span class="now-bullet-ring"></span>
+              <span>Enhancing user experience and peer tools on <strong>Lumis</strong>.</span>
+            </div>
+            <div class="now-item">
+              <span class="now-bullet-ring"></span>
+              <span>Open to select product development, frontend contract engineering, and mobile builds.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 8: CONNECT (LET'S TALK)
+         ========================================================================= -->
+    <section class="section" id="connect">
+      <div class="container">
+        <span class="section-kicker">get in touch</span>
+        <h2 class="section-heading">let's build.</h2>
+
+        <div class="frosted-panel connect-panel">
+          <p class="connect-lead">
+            Have a product concept, web app, or mobile experience you'd like to bring to life? I'd love to connect.
+          </p>
+
+          <div class="connect-channels-row">
+            <a href="https://x.com/Arnold20064" target="_blank" rel="noopener noreferrer" class="contact-card-btn">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>@Arnold20064 on X</span>
+            </a>
+
+            <a href="mailto:davidonyekaonwu565@gmail.com" class="contact-card-btn">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <span>davidonyekaonwu565@gmail.com</span>
+            </a>
+
+            <button type="button" class="contact-card-btn" data-copy="davidonyekaonwu565@gmail.com" style="cursor: pointer;">
+              <span>Copy Email 📋</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand-sig">
+        arnold · product developer
+      </div>
+      <div>
+        Designed &amp; engineered with Three.js, React Native craft, and clean code.
+      </div>
+      <div>
+        &copy; 2026 Arnold. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Micro Toast Notification -->
+  <div class="toast-notice" id="toastNotice">Copied to clipboard! 📋</div>
+
+  <!-- Three.js + GLTFLoader (CDN for robust 3D rendering) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  
+  <!-- Core Application Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
