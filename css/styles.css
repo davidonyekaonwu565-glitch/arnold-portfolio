@@ -1079,3 +1079,182 @@ a {
   visibility: visible;
   transform: translateX(-50%) translateY(0);
 }
+
+/* =========================================================================
+   INTERACTIVE FLOATING MAKIMA AVATAR COMPANION (OPTION B)
+   Real-time cursor & touch tracking, eye gaze shift, dynamic speech bubbles,
+   natural blinking, and interactive tap reactions.
+   ========================================================================= */
+.floating-avatar-hud {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.avatar-hud-inner {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.avatar-portrait-wrap {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  perspective: 800px;
+  transform-style: preserve-3d;
+  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 166, 35, 0.4);
+  border: 2px solid rgba(245, 166, 35, 0.85);
+  background: #0d0e12;
+  overflow: hidden;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+.avatar-portrait-wrap:hover {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 35px rgba(245, 166, 35, 0.65);
+  border-color: #f5a623;
+}
+
+.avatar-portrait-wrap.clicked {
+  animation: avatarPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes avatarPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.88); }
+  65% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+#hudAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+  transform: scale(1.12);
+  transition: transform 0.12s ease-out;
+  pointer-events: none;
+}
+
+/* Glowing concentric rim aura */
+.avatar-ring-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 60%, rgba(245, 166, 35, 0.35) 100%);
+  mix-blend-mode: screen;
+}
+
+/* Eye gaze iris tracking shimmer overlay */
+.eye-iris-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--eye-x, 50%) var(--eye-y, 45%), rgba(255, 215, 0, 0.4) 0%, rgba(255, 68, 68, 0.18) 25%, transparent 60%);
+  mix-blend-mode: color-dodge;
+  transition: background-position 0.1s ease;
+}
+
+/* Natural eye blink overlay */
+.avatar-portrait-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #0d0e12;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.08s ease;
+}
+
+.avatar-portrait-wrap.blinking::after {
+  opacity: 0.95;
+}
+
+/* Floating Speech Bubble */
+.avatar-speech-bubble {
+  background: rgba(14, 15, 20, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.65rem 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 18px rgba(245, 166, 35, 0.18);
+  max-width: 320px;
+  min-width: 0;
+  flex-shrink: 1;
+  transform-origin: right center;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+}
+
+.avatar-speech-bubble:hover {
+  border-color: rgba(245, 166, 35, 0.45);
+  background: rgba(20, 22, 28, 0.95);
+  transform: translateY(-2px);
+}
+
+.speech-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  flex-shrink: 0;
+  animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+.speech-text {
+  font-family: var(--display);
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: #f0f0f5;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.speech-text.fading {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+/* Mobile Responsiveness for Companion */
+@media (max-width: 768px) {
+  .floating-avatar-hud {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+  .avatar-speech-bubble {
+    display: none;
+  }
+  .avatar-portrait-wrap {
+    width: 60px;
+    height: 60px;
+    border-width: 2px;
+  }
+}
