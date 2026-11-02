@@ -1,100 +1,17 @@
 /**
  * Arnold Portfolio - Core Application Script
- * Powered by Lenis Momentum Scroll, Interactive Avatar Companion (Option B),
- * Cosmic Dust Canvas Engine, and High-Precision Counter Easing.
+ * 100% Native Ultra-Fast Scrolling (0ms lag, 120 FPS)
+ * Interactive Screen-Pasted Character with Real-Time Eye & Cursor Tracking
+ * Animated Stat Numbers (easeOutCubic)
  */
 
 (function () {
   'use strict';
 
   /* =========================================================================
-     1. INLINED LENIS SMOOTH MOMENTUM SCROLL (Exact veee.app engine)
+     1. 100% NATIVE SMOOTH SCROLL (Zero Lag, Instant 1:1 Hand Follow)
      ========================================================================= */
-  class Lenis {
-    constructor({ lerp = 0.09, wheelMultiplier = 1, smoothWheel = true } = {}) {
-      this.lerp = lerp;
-      this.wheelMultiplier = wheelMultiplier;
-      this.smoothWheel = smoothWheel;
-      this.targetScroll = window.scrollY;
-      this.actualScroll = window.scrollY;
-      this.isScrolling = false;
-      this.callbacks = [];
-
-      this.onWheel = this.onWheel.bind(this);
-      this.onScroll = this.onScroll.bind(this);
-      this.raf = this.raf.bind(this);
-
-      window.addEventListener('wheel', this.onWheel, { passive: false });
-      window.addEventListener('scroll', this.onScroll, { passive: true });
-      requestAnimationFrame(this.raf);
-    }
-
-    onWheel(e) {
-      if (!this.smoothWheel) return;
-      if (document.body.classList.contains('mobile-open')) return;
-      e.preventDefault();
-      const delta = e.deltaY * this.wheelMultiplier;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      this.targetScroll = Math.max(0, Math.min(this.targetScroll + delta, maxScroll));
-      this.isScrolling = true;
-    }
-
-    onScroll() {
-      if (!this.isScrolling) {
-        this.targetScroll = window.scrollY;
-        this.actualScroll = window.scrollY;
-      }
-    }
-
-    raf() {
-      if (Math.abs(this.targetScroll - this.actualScroll) > 0.5) {
-        this.actualScroll += (this.targetScroll - this.actualScroll) * this.lerp;
-        window.scrollTo(0, this.actualScroll);
-        this.emit();
-      } else if (this.isScrolling) {
-        this.actualScroll = this.targetScroll;
-        this.isScrolling = false;
-        this.emit();
-      }
-      requestAnimationFrame(this.raf);
-    }
-
-    on(cb) {
-      this.callbacks.push(cb);
-    }
-
-    emit() {
-      for (let i = 0; i < this.callbacks.length; i++) {
-        this.callbacks[i]({ scroll: this.actualScroll });
-      }
-    }
-
-    scrollTo(targetY) {
-      this.targetScroll = targetY;
-      this.isScrolling = true;
-    }
-  }
-
-  // Initialize Lenis
-  const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
-
-  // Connect Lenis with GSAP ScrollTrigger if present
-  if (window.ScrollTrigger) {
-    lenis.on(() => ScrollTrigger.update());
-    ScrollTrigger.scrollerProxy(window, {
-      scrollTop(value) {
-        if (arguments.length) {
-          lenis.scrollTo(value);
-        }
-        return window.scrollY;
-      },
-      getBoundingClientRect() {
-        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-      }
-    });
-  }
-
-  // Smooth anchor links with Lenis
+  // Smooth scroll for anchor links using native browser scroll
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -102,14 +19,25 @@
       const target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
-        const top = target.getBoundingClientRect().top + window.scrollY;
-        lenis.scrollTo(top);
+        target.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
 
+  // Header background blur on scroll
+  const siteHeader = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    if (siteHeader) {
+      if (window.scrollY > 40) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    }
+  }, { passive: true });
+
   /* =========================================================================
-     2. COSMIC DUST CANVAS ENGINE (Ultra-lightweight 2D Canvas ambient field)
+     2. COSMIC DUST CANVAS (Ultra-Lightweight 2D Ambient Starfield)
      ========================================================================= */
   (function initCosmicCanvas() {
     const canvas = document.getElementById('webgl');
@@ -125,7 +53,7 @@
       height = canvas.height = window.innerHeight;
     });
 
-    const PARTICLE_COUNT = Math.min(85, Math.floor((width * height) / 12000));
+    const PARTICLE_COUNT = Math.min(65, Math.floor((width * height) / 14000));
     const particles = [];
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -133,9 +61,9 @@
         x: Math.random() * width,
         y: Math.random() * height,
         radius: Math.random() * 1.5 + 0.6,
-        alpha: Math.random() * 0.5 + 0.15,
-        speedX: (Math.random() - 0.5) * 0.35,
-        speedY: -Math.random() * 0.45 - 0.1,
+        alpha: Math.random() * 0.45 + 0.15,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: -Math.random() * 0.4 - 0.1,
         phase: Math.random() * Math.PI * 2,
         pulseSpeed: Math.random() * 0.02 + 0.01,
       });
@@ -149,11 +77,10 @@
       mouseY = e.clientY;
     }, { passive: true });
 
-    function renderCanvas(now) {
+    function renderParticles() {
       ctx.clearRect(0, 0, width, height);
-
-      const mxOffset = (mouseX / width - 0.5) * 20;
-      const myOffset = (mouseY / height - 0.5) * 20;
+      const mxOffset = (mouseX / width - 0.5) * 16;
+      const myOffset = (mouseY / height - 0.5) * 16;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
@@ -165,176 +92,190 @@
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
 
-        const dynamicAlpha = Math.max(0.1, p.alpha + Math.sin(p.phase) * 0.2);
-
-        ctx.fillStyle = `rgba(245, 166, 35, ${dynamicAlpha})`;
+        const dynAlpha = Math.max(0.1, p.alpha + Math.sin(p.phase) * 0.18);
+        ctx.fillStyle = `rgba(245, 166, 35, ${dynAlpha})`;
         ctx.beginPath();
-        ctx.arc(p.x + mxOffset * (p.radius * 0.5), p.y + myOffset * (p.radius * 0.5), p.radius, 0, Math.PI * 2);
+        ctx.arc(p.x + mxOffset, p.y + myOffset, p.radius, 0, Math.PI * 2);
         ctx.fill();
       }
-
-      requestAnimationFrame(renderCanvas);
+      requestAnimationFrame(renderParticles);
     }
-    requestAnimationFrame(renderCanvas);
+    requestAnimationFrame(renderParticles);
   })();
 
   /* =========================================================================
-     3. INTERACTIVE MAKIMA AVATAR COMPANION (Option B)
-     Real-time cursor & touch tracking, eye gaze shift, dynamic speech bubbles,
-     natural blinking, and interactive tap reactions.
+     3. SCREEN-PASTED INTERACTIVE CHARACTER (veee.app style)
+     Directly on screen, tracks cursor & touch, blinking eyes, section poses
      ========================================================================= */
-  (function initAvatarCompanion() {
-    const hud = document.getElementById('avatarHud');
-    if (!hud) return;
+  (function initScreenCharacter() {
+    const stage = document.getElementById('characterStage');
+    const figure = document.getElementById('characterFigure');
+    const pupilL = document.getElementById('trackPupilL');
+    const pupilR = document.getElementById('trackPupilR');
+    const blinkLayer = document.getElementById('blinkLayer');
+    const speechText = document.getElementById('charSpeechText');
 
-    const portraitWrap = hud.querySelector('.avatar-portrait-wrap');
-    const avatarImg = document.getElementById('hudAvatarImg');
-    const irisShimmer = hud.querySelector('.eye-iris-shimmer');
-    const speechBubble = document.getElementById('avatarSpeech');
-    const speechText = document.getElementById('speechText');
+    if (!stage || !figure) return;
 
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
     let targetTiltX = 0;
     let targetTiltY = 0;
-    let currentTiltX = 0;
-    let currentTiltY = 0;
+    let curTiltX = 0;
+    let curTiltY = 0;
 
-    // Track Cursor or Touch
-    function updatePointer(x, y) {
-      mouseX = x;
-      mouseY = y;
-      if (!portraitWrap) return;
-      const rect = portraitWrap.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+    let targetPupilX = 0;
+    let targetPupilY = 0;
+    let curPupilX = 0;
+    let curPupilY = 0;
 
-      const deltaX = (x - centerX) / (window.innerWidth / 2);
-      const deltaY = (y - centerY) / (window.innerHeight / 2);
+    function handlePointer(x, y) {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
 
-      targetTiltX = Math.max(-1, Math.min(1, deltaX));
-      targetTiltY = Math.max(-1, Math.min(1, deltaY));
+      // Normalized coordinates from -1 to 1
+      const normX = (x / w) * 2 - 1;
+      const normY = (y / h) * 2 - 1;
+
+      targetTiltX = Math.max(-1, Math.min(1, normX));
+      targetTiltY = Math.max(-1, Math.min(1, normY));
+
+      // Pupil offset max ~9px
+      targetPupilX = targetTiltX * 9;
+      targetPupilY = targetTiltY * 7;
     }
 
     window.addEventListener('mousemove', (e) => {
-      updatePointer(e.clientX, e.clientY);
+      handlePointer(e.clientX, e.clientY);
     }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
       if (e.touches && e.touches[0]) {
-        updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+        handlePointer(e.touches[0].clientX, e.touches[0].clientY);
       }
     }, { passive: true });
 
-    // Smooth tracking loop for head tilt & iris follow
+    // Smooth animation loop for 3D tilt and pupil tracking
     function animLoop() {
-      currentTiltX += (targetTiltX - currentTiltX) * 0.08;
-      currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+      curTiltX += (targetTiltX - curTiltX) * 0.1;
+      curTiltY += (targetTiltY - curTiltY) * 0.1;
 
-      if (portraitWrap) {
-        const rotY = currentTiltX * 18;
-        const rotX = -currentTiltY * 18;
-        const transX = currentTiltX * 8;
-        const transY = currentTiltY * 8;
-        portraitWrap.style.transform = `rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg) translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0)`;
-      }
+      curPupilX += (targetPupilX - curPupilX) * 0.12;
+      curPupilY += (targetPupilY - curPupilY) * 0.12;
 
-      if (avatarImg) {
-        avatarImg.style.transform = `scale(1.12) translate(${(-currentTiltX * 6).toFixed(2)}px, ${(-currentTiltY * 6).toFixed(2)}px)`;
-      }
+      // 3D head and body tilt
+      const rotY = curTiltX * 22;
+      const rotX = -curTiltY * 18;
+      const transX = curTiltX * 16;
+      const transY = curTiltY * 14;
 
-      if (irisShimmer) {
-        const eyeX = 50 + currentTiltX * 22;
-        const eyeY = 45 + currentTiltY * 22;
-        irisShimmer.style.setProperty('--eye-x', `${eyeX.toFixed(1)}%`);
-        irisShimmer.style.setProperty('--eye-y', `${eyeY.toFixed(1)}%`);
+      figure.style.transform = `perspective(1000px) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg) translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0)`;
+
+      // Move pupils to follow cursor / finger
+      if (pupilL && pupilR) {
+        const pupilTransform = `translate(calc(-50% + ${curPupilX.toFixed(1)}px), calc(-50% + ${curPupilY.toFixed(1)}px))`;
+        pupilL.style.transform = pupilTransform;
+        pupilR.style.transform = pupilTransform;
       }
 
       requestAnimationFrame(animLoop);
     }
     requestAnimationFrame(animLoop);
 
-    // Natural Eye Blinking
+    // Natural Eye Blinking Cycle
     function triggerBlink() {
-      if (!portraitWrap) return;
-      portraitWrap.classList.add('blinking');
+      if (!blinkLayer) return;
+      blinkLayer.classList.add('blinking');
       setTimeout(() => {
-        portraitWrap.classList.remove('blinking');
-        const nextBlink = Math.random() * 3500 + 3000;
-        setTimeout(triggerBlink, nextBlink);
+        blinkLayer.classList.remove('blinking');
+        const next = Math.random() * 3200 + 2800;
+        setTimeout(triggerBlink, next);
       }, 120);
     }
-    setTimeout(triggerBlink, 3000);
+    setTimeout(triggerBlink, 2500);
 
-    // Contextual Section Speech Map
-    const sectionMessages = {
-      hero: "Hey! I'm Arnold 👋 Building products people love.",
-      about: "Product Developer • Frontend & Mobile Engineer.",
-      focus: "React, React Native, TypeScript & UI/UX systems.",
-      highlights: "2+ core platforms • 5+ live client sites active!",
-      apps: "Explore Lumis OS & Nestie mobile creator app.",
-      work: "5 live client builds deployed and active.",
-      connect: "Let's collaborate! davidonyekaonwu565@gmail.com"
+    // Contextual Section Speech & Poses
+    const sectionData = {
+      hero: {
+        cls: 'sec-hero',
+        msg: "Hey! I'm Arnold 👋 Building products that convert."
+      },
+      about: {
+        cls: 'sec-about',
+        msg: "Product Developer • Frontend & Mobile Engineer."
+      },
+      focus: {
+        cls: 'sec-focus',
+        msg: "React, React Native, TypeScript & modern UI/UX."
+      },
+      highlights: {
+        cls: 'sec-highlights',
+        msg: "Real metrics: 2+ platforms • 5+ live client sites!"
+      },
+      apps: {
+        cls: 'sec-apps',
+        msg: "Featured: Lumis Web OS & Nestie mobile app!"
+      },
+      work: {
+        cls: 'sec-work',
+        msg: "5 live production client websites deployed."
+      },
+      connect: {
+        cls: 'sec-connect',
+        msg: "Let's build something crazy! davidonyekaonwu565@gmail.com"
+      }
     };
 
-    let currentSection = 'hero';
-    let isCustomMessage = false;
+    let activeSection = 'hero';
+    let isUserTapped = false;
 
     function setSpeech(msg, isCustom = false) {
       if (!speechText) return;
-      isCustomMessage = isCustom;
+      isUserTapped = isCustom;
       speechText.classList.add('fading');
       setTimeout(() => {
         speechText.textContent = msg;
         speechText.classList.remove('fading');
-      }, 180);
+      }, 160);
     }
 
-    // Interactive Tap / Click Dialogue Cycle
-    const interactiveQuips = [
-      "Watching your screen! 👁️✨",
-      "Need a high-converting web or mobile product? Arnold builds fast.",
-      "Check out Lumis OS & Nestie mobile app featured below!",
-      "Touch-first architecture & sub-second loading speeds ⚡",
-      "Hit Connect or copy my email to build something crazy!",
-      "Clean code, zero bloat, shipped to production."
+    // Tap/Click Reaction
+    const tapQuotes = [
+      "I'm following your hand right on screen! 👁️✨",
+      "Need a fast digital product? Arnold writes clean code.",
+      "Lumis OS & Nestie mobile app are featured below!",
+      "Touch-first 120fps scrolling on every phone ⚡",
+      "Hit Connect or copy my email to build together!"
     ];
-    let quipIndex = 0;
+    let tapIdx = 0;
 
-    function handleAvatarTap(e) {
+    figure.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (!portraitWrap) return;
-      portraitWrap.classList.remove('clicked');
-      void portraitWrap.offsetWidth; // trigger reflow
-      portraitWrap.classList.add('clicked');
+      figure.classList.remove('clicked');
+      void figure.offsetWidth;
+      figure.classList.add('clicked');
 
-      const quip = interactiveQuips[quipIndex % interactiveQuips.length];
-      quipIndex++;
-      setSpeech(quip, true);
+      const quote = tapQuotes[tapIdx % tapQuotes.length];
+      tapIdx++;
+      setSpeech(quote, true);
 
-      // Reset to section message after 4.5s
-      clearTimeout(portraitWrap._resetTimer);
-      portraitWrap._resetTimer = setTimeout(() => {
-        if (sectionMessages[currentSection]) {
-          setSpeech(sectionMessages[currentSection], false);
+      clearTimeout(figure._timer);
+      figure._timer = setTimeout(() => {
+        if (sectionData[activeSection]) {
+          setSpeech(sectionData[activeSection].msg, false);
         }
-      }, 4500);
-    }
+      }, 4000);
+    });
 
-    if (portraitWrap) portraitWrap.addEventListener('click', handleAvatarTap);
-    if (speechBubble) speechBubble.addEventListener('click', handleAvatarTap);
-
-    // Section Observer for Dynamic Speech & Active Nav Links
+    // Section Observer for Character Position Poses & Speech
     const sections = document.querySelectorAll('section[id], header[id]');
     const navLinks = document.querySelectorAll('.nav-item');
 
     const secObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          currentSection = id;
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          const id = en.target.id;
+          activeSection = id;
 
-          // Update active navigation state
+          // Update active navigation item
           navLinks.forEach((link) => {
             if (link.getAttribute('data-sec') === id || link.getAttribute('href') === `#${id}`) {
               link.classList.add('active');
@@ -343,9 +284,12 @@
             }
           });
 
-          // Update speech if not displaying a custom user-tapped quote
-          if (!isCustomMessage && sectionMessages[id]) {
-            setSpeech(sectionMessages[id]);
+          // Transition character stage class
+          if (sectionData[id]) {
+            stage.className = `screen-character-stage ${sectionData[id].cls}`;
+            if (!isUserTapped) {
+              setSpeech(sectionData[id].msg);
+            }
           }
         }
       });
@@ -355,7 +299,7 @@
   })();
 
   /* =========================================================================
-     4. ANIMATED STAT COUNTERS (Exact veee.app smooth easeOutCubic)
+     4. ANIMATED STAT COUNTERS (veee.app easeOutCubic)
      ========================================================================= */
   (function initStatCounters() {
     const nums = document.querySelectorAll('.stat-num[data-count]');
@@ -375,7 +319,7 @@
         return;
       }
 
-      const duration = 1600;
+      const duration = 1500;
       let startTime = null;
 
       function step(now) {
@@ -403,7 +347,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.25 });
 
     nums.forEach((el) => observer.observe(el));
 
@@ -415,7 +359,7 @@
           runCounter(el);
         }
       });
-    }, 600);
+    }, 500);
   })();
 
   /* =========================================================================

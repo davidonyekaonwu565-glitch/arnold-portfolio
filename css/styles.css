@@ -419,7 +419,13 @@ a {
 }
 
 .hero-wrap {
-  max-width: 680px;
+  max-width: 580px;
+}
+
+@media (min-width: 1200px) {
+  .hero-wrap {
+    max-width: 560px;
+  }
 }
 
 .hero-name {
@@ -1081,180 +1087,271 @@ a {
 }
 
 /* =========================================================================
-   INTERACTIVE FLOATING MAKIMA AVATAR COMPANION (OPTION B)
-   Real-time cursor & touch tracking, eye gaze shift, dynamic speech bubbles,
-   natural blinking, and interactive tap reactions.
+   INTERACTIVE CHARACTER PASTED DIRECTLY ON SCREEN (veee.app style)
+   Pinned to viewport, tracks cursor / hand across entire screen,
+   blinking eyes, section poses, and responsive depth.
    ========================================================================= */
-.floating-avatar-hud {
+.screen-character-stage {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 999;
-  pointer-events: auto;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
   display: flex;
   align-items: center;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.avatar-hud-inner {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: 0.75rem;
-  position: relative;
-}
-
-.avatar-portrait-wrap {
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
-  perspective: 800px;
-  transform-style: preserve-3d;
-  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 166, 35, 0.4);
-  border: 2px solid rgba(245, 166, 35, 0.85);
-  background: #0d0e12;
+  justify-content: center;
   overflow: hidden;
-  flex-shrink: 0;
-  will-change: transform;
 }
 
-.avatar-portrait-wrap:hover {
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 35px rgba(245, 166, 35, 0.65);
-  border-color: #f5a623;
+.character-pivot {
+  position: absolute;
+  top: 50%;
+  right: 12%;
+  transform: translate(0, -50%);
+  width: min(440px, 42vw);
+  max-width: 440px;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              top 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.5s ease;
+  will-change: transform, right, top;
 }
 
-.avatar-portrait-wrap.clicked {
-  animation: avatarPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.character-glow-halo {
+  position: absolute;
+  inset: -15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.28) 0%, rgba(56, 189, 248, 0.12) 45%, transparent 70%);
+  filter: blur(35px);
+  pointer-events: none;
+  z-index: 1;
+  animation: haloPulse 4s ease-in-out infinite alternate;
 }
 
-@keyframes avatarPop {
+@keyframes haloPulse {
+  0% { transform: scale(0.92); opacity: 0.6; }
+  100% { transform: scale(1.08); opacity: 0.95; }
+}
+
+.character-figure {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.character-figure.clicked {
+  animation: charBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes charBounce {
   0% { transform: scale(1); }
-  35% { transform: scale(0.88); }
-  65% { transform: scale(1.15); }
+  35% { transform: scale(0.92) translateY(8px); }
+  65% { transform: scale(1.08) translateY(-12px); }
   100% { transform: scale(1); }
 }
 
-#hudAvatarImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  display: block;
-  transform: scale(1.12);
-  transition: transform 0.12s ease-out;
-  pointer-events: none;
-}
-
-/* Glowing concentric rim aura */
-.avatar-ring-glow {
+/* Floating speech bubble anchored to the character */
+.character-speech-bubble {
   position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle at center, transparent 60%, rgba(245, 166, 35, 0.35) 100%);
-  mix-blend-mode: screen;
-}
-
-/* Eye gaze iris tracking shimmer overlay */
-.eye-iris-shimmer {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle at var(--eye-x, 50%) var(--eye-y, 45%), rgba(255, 215, 0, 0.4) 0%, rgba(255, 68, 68, 0.18) 25%, transparent 60%);
-  mix-blend-mode: color-dodge;
-  transition: background-position 0.1s ease;
-}
-
-/* Natural eye blink overlay */
-.avatar-portrait-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #0d0e12;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.08s ease;
-}
-
-.avatar-portrait-wrap.blinking::after {
-  opacity: 0.95;
-}
-
-/* Floating Speech Bubble */
-.avatar-speech-bubble {
-  background: rgba(14, 15, 20, 0.88);
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(14, 15, 20, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.5);
   border-radius: 999px;
-  padding: 0.65rem 1.15rem;
+  padding: 0.55rem 1.25rem;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 18px rgba(245, 166, 35, 0.18);
-  max-width: 320px;
-  min-width: 0;
-  flex-shrink: 1;
-  transform-origin: right center;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  cursor: pointer;
+  gap: 0.6rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(245, 166, 35, 0.35);
+  white-space: nowrap;
+  z-index: 100;
+  transition: all 0.3s ease;
+  pointer-events: auto;
 }
 
-.avatar-speech-bubble:hover {
-  border-color: rgba(245, 166, 35, 0.45);
-  background: rgba(20, 22, 28, 0.95);
-  transform: translateY(-2px);
-}
-
-.speech-status-dot {
+.speech-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #10b981;
-  box-shadow: 0 0 10px #10b981;
-  flex-shrink: 0;
-  animation: statusPulse 2s infinite;
+  box-shadow: 0 0 8px #10b981;
+  animation: dotPulse 2s infinite;
 }
 
-@keyframes statusPulse {
+@keyframes dotPulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.55; transform: scale(0.85); }
+  50% { opacity: 0.5; transform: scale(0.85); }
 }
 
-.speech-text {
+.speech-label {
   font-family: var(--display);
   font-size: 0.825rem;
-  font-weight: 500;
-  color: #f0f0f5;
-  line-height: 1.35;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-weight: 600;
+  color: #fff;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.speech-text.fading {
+.speech-label.fading {
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(3px);
 }
 
-/* Mobile Responsiveness for Companion */
-@media (max-width: 768px) {
-  .floating-avatar-hud {
-    bottom: 1.25rem;
-    right: 1.25rem;
+/* Character Avatar Card */
+.character-avatar-card {
+  position: relative;
+  width: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(245, 166, 35, 0.25);
+  border: 2px solid rgba(245, 166, 35, 0.5);
+  background: #0d0e12;
+  transform: translateZ(20px);
+}
+
+#charArtwork {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 0.1s ease-out;
+  pointer-events: none;
+}
+
+/* Eye Gaze Tracking Overlay with animated pupils */
+.gaze-tracker-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.track-eye {
+  position: absolute;
+  width: 44px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.track-eye.eye-left {
+  top: 39%;
+  left: 41%;
+}
+
+.track-eye.eye-right {
+  top: 39%;
+  right: 28%;
+}
+
+.track-pupil {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, #ffd700 0%, #ff4500 45%, rgba(255, 69, 0, 0.2) 75%, transparent 100%);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 69, 0, 0.6);
+  mix-blend-mode: screen;
+  transition: transform 0.06s ease-out;
+  will-change: transform;
+}
+
+/* Blink Layer */
+.character-blink-layer {
+  position: absolute;
+  inset: 0;
+  background: #0a0b0e;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 8;
+  transition: opacity 0.09s ease;
+}
+
+.character-blink-layer.blinking {
+  opacity: 0.95;
+}
+
+.character-energy-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 9;
+}
+
+/* Section Position Transitions */
+.screen-character-stage.sec-hero .character-pivot {
+  right: 10%;
+  top: 50%;
+  transform: translate(0, -50%) scale(1);
+}
+
+.screen-character-stage.sec-about .character-pivot {
+  right: 6%;
+  top: 48%;
+  transform: translate(0, -50%) scale(0.96);
+}
+
+.screen-character-stage.sec-focus .character-pivot {
+  right: 62%;
+  top: 52%;
+  transform: translate(0, -50%) scale(0.92);
+}
+
+.screen-character-stage.sec-highlights .character-pivot {
+  right: 50%;
+  top: 48%;
+  transform: translate(50%, -50%) scale(1.04);
+}
+
+.screen-character-stage.sec-apps .character-pivot {
+  right: 8%;
+  top: 50%;
+  transform: translate(0, -50%) scale(0.98);
+}
+
+.screen-character-stage.sec-work .character-pivot {
+  right: 60%;
+  top: 52%;
+  transform: translate(0, -50%) scale(0.94);
+}
+
+.screen-character-stage.sec-connect .character-pivot {
+  right: 50%;
+  top: 46%;
+  transform: translate(50%, -50%) scale(1.06);
+}
+
+/* Mobile Priority Styling */
+@media (max-width: 900px) {
+  .character-pivot {
+    right: 50% !important;
+    top: 54% !important;
+    transform: translate(50%, -50%) !important;
+    width: min(320px, 82vw);
+    opacity: 0.38; /* Subtle background glow so foreground text is 100% crisp */
+    pointer-events: none;
   }
-  .avatar-speech-bubble {
-    display: none;
+  .screen-character-stage {
+    z-index: 1;
   }
-  .avatar-portrait-wrap {
-    width: 60px;
-    height: 60px;
-    border-width: 2px;
+  .character-speech-bubble {
+    top: -24px;
+    padding: 0.42rem 0.85rem;
+    max-width: 90vw;
+  }
+  .speech-label {
+    font-size: 0.72rem;
   }
 }

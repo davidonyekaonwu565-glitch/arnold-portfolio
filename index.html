@@ -26,20 +26,41 @@
   <div class="vignette"></div>
   <div class="grain"></div>
 
-  <!-- Interactive Floating Makima Avatar Companion (Option B) -->
-  <aside class="floating-avatar-hud" id="avatarHud" aria-label="Interactive Avatar Companion">
-    <div class="avatar-hud-inner">
-      <div class="avatar-portrait-wrap">
-        <img src="assets/images/makima_avatar.png" id="hudAvatarImg" alt="Makima Avatar" loading="eager">
-        <div class="avatar-ring-glow"></div>
-        <div class="eye-iris-shimmer"></div>
-      </div>
-      <div class="avatar-speech-bubble" id="avatarSpeech">
-        <span class="speech-status-dot"></span>
-        <span class="speech-text" id="speechText">Hey, I'm Arnold 👋</span>
+  <!-- Interactive Character Pasted Directly on Screen (veee.app style) -->
+  <div class="screen-character-stage" id="characterStage" aria-label="Interactive Mascot">
+    <div class="character-pivot" id="characterPivot">
+      <div class="character-glow-halo"></div>
+      
+      <!-- Interactive Mascot Figure -->
+      <div class="character-figure" id="characterFigure">
+        <!-- Floating Speech Badge pinned near character -->
+        <div class="character-speech-bubble" id="charSpeech">
+          <span class="speech-dot"></span>
+          <span class="speech-label" id="charSpeechText">Hey, I'm Arnold 👋</span>
+        </div>
+
+        <div class="character-avatar-card" id="charAvatarCard">
+          <img src="assets/images/makima_avatar.png" id="charArtwork" alt="Interactive Character" loading="eager">
+          
+          <!-- Interactive Eye Gaze Tracking Overlay -->
+          <div class="gaze-tracker-overlay" id="gazeOverlay">
+            <div class="track-eye eye-left">
+              <div class="track-pupil" id="trackPupilL"></div>
+            </div>
+            <div class="track-eye eye-right">
+              <div class="track-pupil" id="trackPupilR"></div>
+            </div>
+          </div>
+          
+          <!-- Animated Eyelid Blink Layer -->
+          <div class="character-blink-layer" id="blinkLayer"></div>
+          
+          <!-- Ambient Energy Ring -->
+          <div class="character-energy-ring"></div>
+        </div>
       </div>
     </div>
-  </aside>
+  </div>
 
   <!-- Header & Navigation -->
   <header class="site-header" id="siteHeader">
